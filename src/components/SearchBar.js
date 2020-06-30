@@ -7,11 +7,12 @@ const SearchBar = (props) => {
       <input
         type="text"
         placeholder="Search for images"
+        spellCheck="false"
         value={props.value}
         onChange={props.handleChange}
         onKeyDown={props.handleKeyDown}
       />
-      <button className="button" onClick={props.handleClick}>
+      <button className="button" onClick={props.handleSearch}>
         Search
       </button>
     </div>

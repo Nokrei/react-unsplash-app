@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import Axios from 'axios';
-
-import ImageCard from './ImageCard';
+import StackGrid from 'react-stack-grid';
 import SearchBar from './SearchBar';
 import useImageSearch from './useImageSearch';
 
@@ -11,49 +9,63 @@ const ImageContainer = () => {
   const [name, setName] = useState('');
   const { images, hasMore, loading, error } = useImageSearch(query, pageNumber);
   const observer = useRef();
-  const lastImageElementRef = useCallback(node => {
-    if (loading) return
-    if (observer.current) observer.current.disconnect()
-    observer.current = new IntersectionObserver(entries => {
-        if(entries[0].isIntersecting && hasMore) {
-            setPageNumber(prevPageNumber => prevPageNumber + 1)
+  const lastImageElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
-    })
-    if (node) observer.current.observe(node)
-  }, [loading, hasMore]);
-    
-  const handleChange = (event => {
-    setName(event.target.value)
-})
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
+
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
   const handleSearch = () => {
     setQuery(name);
     setPageNumber(1);
   };
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
-        setQuery(name);
-        setPageNumber(1);
-    }}
-  
+      setQuery(name);
+      setPageNumber(1);
+    }
+  };
+
   return (
-    <div>
-      <input type="text" value={name} onChange={handleChange} onKeyDown={handleKeyDown}/>
-      <button onClick={handleSearch}>Search</button>
-      {images.map((item, index) => {
-        if (images.length === index + 1) {
-          return (
-            <div ref={lastImageElementRef} key={item.key}>
-              <img src={item.imageURL} />
-            </div>
-          );
-        } else {
-          return (
-            <div key={item.key}>
-              <img src={item.imageURL} />
-            </div>
-          );
-        }
-      })}
+    <div className="main">
+      <SearchBar
+        value={name}
+        handleChange={handleChange}
+        handleKeyDown={handleKeyDown}
+        handleSearch={handleSearch}
+      />
+
+      <div className="container">
+        <StackGrid columnWidth={400}>
+          {images.map((item, index) => {
+            if (images.length === index + 1) {
+              return (
+                <div ref={lastImageElementRef} key={item.key}>
+                  <img src={item.imageURL} />
+                </div>
+              );
+            } else {
+              return (
+                <div key={item.key}>
+                  <img src={item.imageURL} />
+                </div>
+              );
+            }
+          })}
+        </StackGrid>
+      </div>
+
       <div>{loading && 'Loading...'}</div>
       <div>{error && 'Error'}</div>
     </div>
