@@ -4,7 +4,7 @@ import ImageContainer from './components/ImageContainer';
 const App = () => {
   return (
     <div>
-    
+      
       <ImageContainer />
     </div>
   );

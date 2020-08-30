@@ -11,6 +11,7 @@
 }
 .main {
   font-family: 'Montserrat', sans-serif;
+  
 }
 .searchBar {
   text-align: center;
@@ -43,4 +44,49 @@
 }
 .button:active {
   transform: translateY(4px);
+}
+.footer {
+  width: 100%;
+  text-align: center;
+  position: sticky;
+  bottom: 0px;
+  background-color: white;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 99;
+  padding: 10px 0 10px 0;
+  opacity: 0.7;
+}
+.imgCard{
+  transition-duration: 0.2s ;
+}
+.imgCard:hover{
+  opacity: 0.7 ;
+  
+}
+.toTop{
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  right:2em;
+  bottom:5em;
+  z-index: 99;
+  background-color: transparent;
+}
+.toTop--button{
+  font-size: 4em;
+  color:white;
+  background-color: black;
+  padding:0.3em 0.3em 0 0.3em;
+  border-radius: 2em;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.toTop--button:hover{
+  color:black;
+  background-color: white;
+  border:1px solid black;
+}
+.toTop--button a{
+  text-decoration: none;
+  color:inherit;
+  background-color: transparent;
 }

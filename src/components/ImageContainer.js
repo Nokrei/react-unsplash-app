@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import StackGrid from 'react-stack-grid';
 import SearchBar from './SearchBar';
 import useImageSearch from './useImageSearch';
+import ToTop from './ToTop'
 
 const ImageContainer = () => {
   const [query, setQuery] = useState('');
@@ -36,37 +37,70 @@ const ImageContainer = () => {
       setPageNumber(1);
     }
   };
+  const imageClick = () => {
+    console.log('Click!!!');
+  };
+
+  // using useState to set the visibility parameter
+
+  const [hidden, setHidden] = useState('hidden');
+
+  // handleHidden handles the click events
+  const handleHidden = () => {
+    if (hidden === 'hidden') {
+      setHidden('visible');
+    } else {
+      setHidden('hidden');
+    }
+  };
 
   return (
+    //created a new div element to serve as modal
+
     <div className="main">
+      <div
+        style={{ visibility: hidden, position: 'absolute' }}
+        onClick={handleHidden}
+      >
+        {' '}
+        <img src="https://cdn.pixabay.com/photo/2019/11/22/17/15/drop-of-water-4645249_960_720.jpg" />{' '}
+      </div>
+      
       <SearchBar
         value={name}
         handleChange={handleChange}
         handleKeyDown={handleKeyDown}
         handleSearch={handleSearch}
       />
-
+      <ToTop/>
+      
       <div className="container">
         <StackGrid columnWidth={400}>
           {images.map((item, index) => {
             if (images.length === index + 1) {
               return (
                 <div ref={lastImageElementRef} key={item.key}>
-                  <img src={item.imageURL} />
+                  <img src={item.imageUrl} />
                 </div>
               );
             } else {
               return (
+                // img OnClick attribute handles modal div's visibility
+
                 <div key={item.key}>
-                  <img src={item.imageURL} />
+                  <img
+                    src={item.imageUrl}
+                    className="imgCard"
+                    onClick={handleHidden}
+                  />
                 </div>
               );
             }
           })}
         </StackGrid>
       </div>
-
-      <div>{loading && 'Loading...'}</div>
+      <footer className="footer">Created by Nokrei</footer>
+      <div>{loading && 'Loading...'}/</div>
       <div>{error && 'Error'}</div>
     </div>
   );

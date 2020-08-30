@@ -30,7 +30,7 @@ export default function useImageSearch(query, pageNumber) {
           return [
             ...prevImages,
             ...response.data.results.map((item) => {
-              return { key: item.id, imageURL: item.urls.small };
+              return { key: item.id, imageUrl: item.urls.small, imageUrlBig: item.urls.regular };
             }),
           ];
         });
