@@ -21,7 +21,7 @@ export default function useImageSearch(query, pageNumber) {
         'https://api.unsplash.com/search/photos?query=' +
         query +
         '&client_id=' +
-        process.env.API_KEY,
+        'lf8QposODp2WlpEjUNPq5MF8lZDFdkVvKNa3LirDmqE',
       params: { query: query, page: pageNumber },
       cancelToken: new Axios.CancelToken((c) => (cancel = c)),
     })
